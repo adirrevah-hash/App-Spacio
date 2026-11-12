@@ -32,5 +32,20 @@ export const productSchema = z.object({
   published: z.coerce.boolean().default(true),
 });
 
+export const contactSchema = z.object({
+  name: z.string().trim().min(2, "נא להזין שם מלא").max(120),
+  phone: z.string().trim().min(7, "נא להזין מספר טלפון תקין").max(30),
+  email: z
+    .string()
+    .trim()
+    .email("כתובת אימייל לא תקינה")
+    .optional()
+    .or(z.literal("")),
+  message: z.string().trim().max(1000).optional().or(z.literal("")),
+  productSlug: z.string().trim().max(120).optional().or(z.literal("")),
+  productName: z.string().trim().max(160).optional().or(z.literal("")),
+});
+
 export type CategoryInput = z.infer<typeof categorySchema>;
 export type ProductInput = z.infer<typeof productSchema>;
+export type ContactInput = z.infer<typeof contactSchema>;

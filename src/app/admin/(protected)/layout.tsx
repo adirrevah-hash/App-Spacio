@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAdminSession } from "@/lib/admin-auth";
+import { prisma } from "@/lib/prisma";
 import { logoutAction } from "./actions";
 
 const NAV = [
   { href: "/admin", label: "סקירה" },
   { href: "/admin/categories", label: "קטגוריות" },
   { href: "/admin/products", label: "מוצרים" },
+  { href: "/admin/inquiries", label: "פניות" },
 ];
 
 export default async function AdminProtectedLayout({
@@ -19,6 +21,10 @@ export default async function AdminProtectedLayout({
     redirect("/admin/login");
   }
 
+  const newInquiries = await prisma.contactRequest.count({
+    where: { handled: false },
+  });
+
   return (
     <div className="container-edge grid grid-cols-1 gap-8 py-10 md:grid-cols-[14rem_1fr] md:gap-12 md:py-14">
       <aside className="md:sticky md:top-24 md:self-start">
@@ -28,9 +34,14 @@ export default async function AdminProtectedLayout({
             <Link
               key={item.href}
               href={item.href}
-              className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-ink/80 transition-colors hover:bg-mist hover:text-ink md:text-base"
+              className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-ink/80 transition-colors hover:bg-mist hover:text-ink md:text-base"
             >
               {item.label}
+              {item.href === "/admin/inquiries" && newInquiries > 0 ? (
+                <span className="rounded-full bg-ink px-2 py-0.5 text-xs text-paper">
+                  {newInquiries}
+                </span>
+              ) : null}
             </Link>
           ))}
         </nav>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FavoriteButton } from "@/components/favorite-button";
 
 export function ProductCard({
   slug,
@@ -25,6 +26,7 @@ export function ProductCard({
         <span className="absolute top-4 start-4 rounded-full border border-paper/40 bg-paper/80 px-3 py-1 text-xs font-medium text-ink backdrop-blur">
           תצוגת AR
         </span>
+        <FavoriteButton slug={slug} />
       </div>
       <div className="mt-4 flex items-start justify-between gap-3">
         <div>

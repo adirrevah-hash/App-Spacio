@@ -7,9 +7,15 @@ export function SiteFooter() {
         <p className="tracking-wide">
           <span className="font-semibold text-ink">SPACEVIEW</span> — מציאות רבודה למרחב שלכם
         </p>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-6">
           <Link href="/catalog" className="transition-colors hover:text-ink">
             קטלוג
+          </Link>
+          <Link href="/about" className="transition-colors hover:text-ink">
+            אודות
+          </Link>
+          <Link href="/contact" className="transition-colors hover:text-ink">
+            יצירת קשר
           </Link>
           <Link href="/admin" className="transition-colors hover:text-ink">
             ניהול

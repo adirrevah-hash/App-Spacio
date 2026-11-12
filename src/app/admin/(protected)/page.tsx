@@ -2,9 +2,10 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminDashboardPage() {
-  const [categoryCount, productCount] = await Promise.all([
+  const [categoryCount, productCount, newInquiries] = await Promise.all([
     prisma.category.count(),
     prisma.product.count(),
+    prisma.contactRequest.count({ where: { handled: false } }),
   ]);
 
   return (
@@ -14,7 +15,7 @@ export default async function AdminDashboardPage() {
         כאן מנהלים את הקטגוריות והמוצרים שמוצגים באתר — כולל מודלי AR ותמונות.
       </p>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border hairline p-6">
           <p className="text-sm text-stone">קטגוריות</p>
           <p className="mt-2 text-3xl font-semibold text-ink">{categoryCount}</p>
@@ -33,6 +34,16 @@ export default async function AdminDashboardPage() {
             className="mt-4 inline-block text-sm font-medium text-ink underline-offset-4 hover:underline"
           >
             ניהול מוצרים
+          </Link>
+        </div>
+        <div className="rounded-2xl border hairline p-6">
+          <p className="text-sm text-stone">פניות חדשות</p>
+          <p className="mt-2 text-3xl font-semibold text-ink">{newInquiries}</p>
+          <Link
+            href="/admin/inquiries"
+            className="mt-4 inline-block text-sm font-medium text-ink underline-offset-4 hover:underline"
+          >
+            צפייה בפניות
           </Link>
         </div>
       </div>

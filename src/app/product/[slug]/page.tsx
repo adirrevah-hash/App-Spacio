@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { ModelViewerClient } from "@/components/ar/model-viewer-client";
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
+import { FavoriteButton } from "@/components/favorite-button";
 import { IS_PLACEHOLDER_ASSET } from "@/lib/catalog-defaults";
 
 export default async function ProductPage({
@@ -108,11 +109,18 @@ export default async function ProductPage({
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
+              href={`/contact?product=${product.slug}`}
+              className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-charcoal"
+            >
+              בקשת הצעת מחיר
+            </Link>
+            <Link
               href={`/catalog?category=${product.category.slug}`}
               className="inline-flex items-center justify-center rounded-full border hairline px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-ink"
             >
               עוד ב{product.category.name}
             </Link>
+            <FavoriteButton slug={product.slug} variant="inline" />
           </div>
         </Reveal>
       </div>
